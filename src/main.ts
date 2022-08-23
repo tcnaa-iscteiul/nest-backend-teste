@@ -5,14 +5,14 @@ import { AppModule } from "./app.module";
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    
+    /*
     app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', '*');
         res.header('Access-Control-Allow-Headers', '*');
         next();
     });
-    /*
+    
     const allowCors = fn => async (req, res) => {
         res.setHeader('Access-Control-Allow-Credentials', true)
         res.setHeader('Access-Control-Allow-Origin', '*')
@@ -37,7 +37,7 @@ async function bootstrap() {
 
     module.exports = allowCors(handler)
     */
-  /*  
+  /*
     app.use(function (req, res, next) {
 
         // Website you wish to allow to connect
@@ -56,11 +56,35 @@ async function bootstrap() {
         // Pass to next layer of middleware
         next();
     });
-    */
+    
     app.enableCors({
         allowedHeaders: "*",
         origin: "*"
-    });
+    });*/
+
+    const allowCors = fn => async (req, res) => {
+        res.setHeader('Access-Control-Allow-Credentials', true)
+        res.setHeader('Access-Control-Allow-Origin', '*')
+        // another common pattern
+        // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+        res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+        res.setHeader(
+            'Access-Control-Allow-Headers',
+            'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+        )
+        if (req.method === 'OPTIONS') {
+            res.status(200).end()
+            return
+        }
+        return await fn(req, res)
+    }
+
+    const handler = (req, res) => {
+        const d = new Date()
+        res.end(d.toString())
+    }
+
+    module.exports = allowCors(handler);
     
     app.useGlobalPipes(new ValidationPipe());
     await app.listen(process.env.PORT || 3000, function () {
