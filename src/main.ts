@@ -3,8 +3,13 @@ import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from "./app.module";
 
+import express from "express";
+
+
 async function bootstrap() {
+
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
+    app.enableCors();
     /*
     app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
@@ -56,17 +61,19 @@ async function bootstrap() {
         // Pass to next layer of middleware
         next();
     });
-    
+    /*
     app.enableCors({
         allowedHeaders: "*",
         origin: "*"
     });*/
-
+    /*
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "https://school-application2.vercel.app/", "https://localhost:3000/"); // update to match the domain you will make the request from
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
+    */
+
     
     app.useGlobalPipes(new ValidationPipe());
     await app.listen(process.env.PORT || 3000, function () {
