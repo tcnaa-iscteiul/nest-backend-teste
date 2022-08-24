@@ -9,7 +9,6 @@ import express from "express";
 async function bootstrap() {
 
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    app.enableCors();
     /*
     app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
@@ -17,7 +16,7 @@ async function bootstrap() {
         res.header('Access-Control-Allow-Headers', '*');
         next();
     });
-    
+   */
     const allowCors = fn => async (req, res) => {
         res.setHeader('Access-Control-Allow-Credentials', true)
         res.setHeader('Access-Control-Allow-Origin', '*')
@@ -41,7 +40,7 @@ async function bootstrap() {
     }
 
     module.exports = allowCors(handler)
-    */
+    
   /*
     app.use(function (req, res, next) {
 
