@@ -9,14 +9,14 @@ import express from "express";
 async function bootstrap() {
 
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    /*
+    
     app.use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', '*');
         res.header('Access-Control-Allow-Headers', '*');
         next();
     });
-   */
+   /*
     const allowCors = fn => async (req, res) => {
         res.setHeader('Access-Control-Allow-Credentials', true)
         res.setHeader('Access-Control-Allow-Origin', '*')
@@ -40,7 +40,7 @@ async function bootstrap() {
     }
 
     module.exports = allowCors(handler)
-    
+    */
   /*
     app.use(function (req, res, next) {
 
@@ -59,12 +59,12 @@ async function bootstrap() {
 
         // Pass to next layer of middleware
         next();
-    });
-    /*
+    });*/
+    
     app.enableCors({
         allowedHeaders: "*",
         origin: "*"
-    });*/
+    });
     /*
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "https://school-application2.vercel.app/", "https://localhost:3000/"); // update to match the domain you will make the request from
